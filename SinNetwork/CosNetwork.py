@@ -39,11 +39,11 @@ def train_network(epochs):
 
         #save images
         inputs = np.arange(-10,10,0.01)
-        true_sin = np.sin(inputs)
+        true_cos = np.cos(inputs)
         with torch.no_grad():
-            net_sin = network(torch.Tensor(inputs).view(-1,1)).squeeze().numpy()
-        plt.plot(inputs,true_sin, label = 'Sin function')
-        plt.plot(inputs,net_sin, label = 'Neural network')
+            net_cos = network(torch.Tensor(inputs).view(-1,1)).squeeze().numpy()
+        plt.plot(inputs,true_cos, label = 'Cos function')
+        plt.plot(inputs,net_cos, label = 'Neural network')
         plt.legend(loc = 1)
         plt.xlim(-10,10)
         plt.ylim(-1.1,1.1)
@@ -54,7 +54,7 @@ def train_network(epochs):
         #create training numbers
         nums = np.random.uniform(-10,10,batch_size)
         x = torch.Tensor(nums)
-        y = torch.Tensor(np.sin(nums))
+        y = torch.Tensor(np.cos(nums))
         y = y.view(batch_size,-1)
 
         #train network
@@ -67,22 +67,22 @@ def train_network(epochs):
     
     plt.plot(range(len(losses)), losses)
     plt.show()
-    torch.save(network.state_dict(),'trained_network.pt')
+    torch.save(network.state_dict(),'trained_network_cos.pt')
 
     #resulting function
     inputs = np.arange(-10,10,0.01)
-    true_sin = np.sin(inputs)
+    true_sin = np.cos(inputs)
     with torch.no_grad():
-        net_sin = network(torch.Tensor(inputs).view(-1,1)).squeeze().numpy()
-    plt.plot(inputs,true_sin, label = 'Sin function')
-    plt.plot(inputs,net_sin, label = 'Neural network')
+        net_cos = network(torch.Tensor(inputs).view(-1,1)).squeeze().numpy()
+    plt.plot(inputs,true_cos, label = 'Cos function')
+    plt.plot(inputs,net_cos, label = 'Neural network')
     plt.legend(loc = 1)
     plt.xlim(-10,10)
     plt.show()
     
 def create_gif(folder):
     print('START: create_gif')
-    with imageio.get_writer('sinusgif15k.gif', mode = 'I', duration = 1/25) as writer:
+    with imageio.get_writer('cosgif15k.gif', mode = 'I', duration = 1/25) as writer:
         for filename in sorted(os.listdir(folder), key = len)[:1500]:
             image = imageio.imread(folder+filename)
             writer.append_data(image)
