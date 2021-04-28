@@ -42,10 +42,11 @@ def train_network(epochs):
         # true_sin = np.sin(inputs)
         # with torch.no_grad():
         #     net_sin = network(torch.Tensor(inputs).view(-1,1)).squeeze().numpy()
-        # plt.plot(inputs,true_sin, label = 'Sinus function')
+        # plt.plot(inputs,true_sin, label = 'Sin function')
         # plt.plot(inputs,net_sin, label = 'Neural network')
         # plt.legend(loc = 1)
         # plt.xlim(-10,10)
+        # plt.ylim(-1.1,1.1)
         # plt.savefig('Plots/'+str(epoch)+'.png')
         # plt.clf()
 
@@ -73,17 +74,19 @@ def train_network(epochs):
     true_sin = np.sin(inputs)
     with torch.no_grad():
         net_sin = network(torch.Tensor(inputs).view(-1,1)).squeeze().numpy()
-    plt.plot(inputs,true_sin, label = 'Sine function')
+    plt.plot(inputs,true_sin, label = 'Sin function')
     plt.plot(inputs,net_sin, label = 'Neural network')
     plt.legend(loc = 1)
     plt.xlim(-10,10)
     plt.show()
     
 def create_gif(folder):
+    print('START: create_gif')
     with imageio.get_writer('sinusgif15k.gif', mode = 'I', duration = 1/60) as writer:
         for filename in sorted(os.listdir(folder), key = len)[:1500]:
             image = imageio.imread(folder+filename)
             writer.append_data(image)
+    print('END: create_gif')
 
 
 def plot_larger(range,network_path):
@@ -95,7 +98,7 @@ def plot_larger(range,network_path):
     true_sin = np.sin(inputs)
     with torch.no_grad():
         net_sin = network(torch.Tensor(inputs).view(-1,1)).squeeze().numpy()
-    plt.plot(inputs,true_sin, label = 'Sinus function')
+    plt.plot(inputs,true_sin, label = 'Sin function')
     plt.plot(inputs,net_sin, label = 'Neural network')
     plt.legend(loc = 1)
     plt.xlim(-range,range)
@@ -104,9 +107,10 @@ def plot_larger(range,network_path):
 
 
 
-train_network(5000)
-#create_gif('Plots/')
-#plot_larger(100,'trained_network.pt')
+# train_network(5000)
+train_network(1000)
+create_gif('Plots/')
+# plot_larger(100,'trained_network.pt')
 
         
 
